@@ -1,11 +1,12 @@
 
 const express = require("express")
 const app = express()
-const PORT = 3700
 const bookRoutes = require("./routes/BookRoute")
 const memberRoutes = require("./routes/MemberRoute")
+const authRoutes = require("./routes/authRoute")
 const mongoose = require("mongoose");
-const cors = require('cors')
+const cors = require('cors');
+const PORT = process.env.PORT || 3700
 
 //MiddleWares-----------
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use(cors({
 //----------------------
 app.use("/api/v1",bookRoutes)
 app.use("/api/v1",memberRoutes)
+app.use("/api/v1",authRoutes)
 
 
 
