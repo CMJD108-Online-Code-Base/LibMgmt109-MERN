@@ -28,6 +28,21 @@ router.post(bookURL,async(req,res) =>{
         res.status(500).send("Internal Server Error")
 
     }
+});
+
+//delete  book
+router.delete(bookURL+"/:id",async(req,res)=>{
+    try{
+        const delBook = await bookService.deleteBook(req.params.id);
+        if(!delBook){
+            return res.status(404).send("Book not found for delete")
+        }
+       return res.status(204).send();
+
+    }catch(err){
+        console.error(err);
+        return res.status(500).send("Internal Server Error")
+    }
 })
 
 
