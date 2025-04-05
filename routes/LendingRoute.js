@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const memberService = require("../service/MemberService ");
+const lendingService = require("../service/LendingService");
 const res = require("express/lib/response");
 const authTokenData = require('../middleware/authToken')
-const memberURL = "/member";
+const lendingUrl = "/lending";
 
-router.get(memberURL, authTokenData, async (req, res) => {
+router.get(lendingUrl, authTokenData, async (req, res) => {
     try {
-        const allMembers = await memberService.getAllMembers();
+        const allLendings = await lendingService.getAllMembers();
 
         // const filterBooks = allBooks.map(book =>({
         //     bookId: book.bookId,
@@ -23,19 +23,19 @@ router.get(memberURL, authTokenData, async (req, res) => {
         //     lastUpdateTime:book.lastUpdateTime
         // }));
         // console.log("Get all books ", filterBooks);
-        res.json(allMembers)
+        res.json(allLendings)
 
     } catch (error) {
         res.status(500).json({ error: "Error fetching books" });
     }
 });
 
-// Create book
-router.post(memberURL, async (req, res) => {
-    console.log("Member request.....", req.body)
+// Create lending
+router.post(lendingUrl, async (req, res) => {
+    console.log("Lending request.....", req.body)
     try {
-        await memberService.addMember(req.body)
-        return res.status(201).send("Saved Member Successfully")
+        await lendingService.addLending(req.body)
+        return res.status(201).send("Saved lending Successfully")
 
     } catch (err) {
         console.error(err);
@@ -45,7 +45,7 @@ router.post(memberURL, async (req, res) => {
 });
 
 //delete  book
-router.delete(memberURL + "/:id", async (req, res) => {
+router.delete(lendingUrl + "/:id", async (req, res) => {
     try {
         const delMember = await memberService.deleteMember(req.params.id);
         if (!delMember) {
@@ -59,7 +59,7 @@ router.delete(memberURL + "/:id", async (req, res) => {
     }
 })
 //update 
-router.patch(memberURL + "/:id", async (req, res) => {
+router.patch(lendingUrl + "/:id", async (req, res) => {
     try {
         const updatedMember = await memberService.updateMember(req.params.id, req.body);
         if (!updatedMember) {

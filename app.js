@@ -3,6 +3,7 @@ const express = require("express")
 const app = express()
 const bookRoutes = require("./routes/BookRoute")
 const memberRoutes = require("./routes/MemberRoute")
+const lendingRoutes = require("./routes/LendingRoute")
 const authRoutes = require("./routes/authRoute")
 const mongoose = require("mongoose");
 const cors = require('cors');
@@ -19,6 +20,7 @@ app.use(cors({
 //----------------------
 app.use("/api/v1",bookRoutes)
 app.use("/api/v1",memberRoutes)
+app.use("/api/v1",lendingRoutes)
 app.use("/api/v1",authRoutes)
 
 

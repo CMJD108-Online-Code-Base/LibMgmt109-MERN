@@ -1,19 +1,21 @@
 //CRUD for Member data handling
+const Member = require('../model/memberModel')
 
 async function getAllMembers(){
-    console.log("Get all members....")
+    return Member.find();
 }
 
-async function addMember(){
-    console.log("Add member....")
+async function addMember(member){
+    const memberData = new Member(member);
+    return memberData.save();
 }
 
 async function deleteMember(){
-    console.log("Delete member....")
+    return Member.findOneAndDelete(memberId)
 }
 
 async function updateMember(){
-    console.log("Update member....")
+    return Member.findOneAndUpdate({ memberId:memberId},memberData,{new : true})
 }
 
 module.exports = { getAllMembers, addMember, deleteMember,updateMember }
