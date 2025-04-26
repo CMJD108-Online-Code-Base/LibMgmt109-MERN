@@ -11,8 +11,8 @@ async function getAllLendingds(){
 async function addLending(lending) {
     console.log(lending)
     try {
-        const member = await Member.findById({ memberId: lending.member });
-        const book = await Book.findById({ bookId: lending.book });
+        const member = await Member.findOne({ memberId: lending.member });
+        const book = await Book.findOne({ bookId: lending.book });
 
         if (!member) {
             throw new Error(`Member with ID ${lending.member} not found`);
@@ -28,9 +28,8 @@ async function addLending(lending) {
         }
 
         // Proceed with lending
-        book.availableQty -= 1;
+        book.avilableQty -= 1;
         await book.save();
-
         lending.isActiveLending = true;
         lending.overdueDays = 0;
         lending.fineAmount = 0;
@@ -41,6 +40,8 @@ async function addLending(lending) {
         await lendingData.save();
 
         return lendingData;
+        
+        
     } catch (err) {
         // Handle error (no need for rollback since there's no transaction)
         throw err; // Re-throw to be handled by your route/controller
@@ -52,8 +53,32 @@ async function deleteLending(){
     return Lending.findOneAndDelete(lendingId)
 }
 
-async function updateLending(){
-    return Lending.findOneAndUpdate({ lendingId:lendingId},lendingData,{new : true})
+async function updateLending(lendingId, lendingData){
+    try{
+        const book = await Book.findOne({ bookId: lending.book });
+        const member = await Member.findOne({ memberId: lending.member });
+
+        if (!member) {
+            throw new Error(`Member with ID ${lending.member} not found`);
+        }
+
+        if (!book) {
+            throw new Error(`Book with ID ${lending.book} not found`);
+        }
+      const lendingData =  Lending.findOneAndUpdate({ lendingId:lendingId},lendingData,{new : true})
+      book.set
+
+
+
+
+
+      return lendingData
+    }catch(er){
+        console.log(er)
+    }
+    
+
+
 }
 
 //generate return date and other utills
